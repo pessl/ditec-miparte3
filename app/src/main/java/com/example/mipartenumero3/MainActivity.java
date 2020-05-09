@@ -4,15 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MainActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
+
+    GoogleMap mapa;
+    LatLng ubicacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +32,31 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        GoogleMap mapa = googleMap;
-        LatLng UPV = new LatLng(-18.013766, -70.255331); //Nos ubicamos en la UNJBG
-        mapa.addMarker(new MarkerOptions().position(UPV).title("Marcador Tacna"));
-        mapa.moveCamera(CameraUpdateFactory.newLatLng(UPV));
+        mapa = googleMap;
+        ubicacion = new LatLng(-18.013766, -70.255331); //Nos ubicamos en la UNJBG
+        mapa.addMarker(new MarkerOptions().position(ubicacion).title("Marcador Tacna"));
+        mapa.moveCamera(CameraUpdateFactory.newLatLng(ubicacion));
+        mapa.setOnMapClickListener(this);
+    }
+
+    public void moveCamera(View view) {
+        mapa.moveCamera(CameraUpdateFactory.newLatLng(ubicacion));
+    }
+
+    public void addMarker(View view) {
+        mapa.addMarker(new MarkerOptions().position(
+                mapa.getCameraPosition().target));
+    }
+
+    @Override public void onMapClick(LatLng puntoPulsado) {
+
+        //Esto es para ver el log de esta ubicacion
+        Log.i("mipunto", puntoPulsado.toString());
+        Log.i("mipunto", String.valueOf(puntoPulsado.latitude));
+        Log.i("mipunto", String.valueOf(puntoPulsado.longitude));
+
+        mapa.addMarker(new MarkerOptions().position(puntoPulsado)
+                .icon(BitmapDescriptorFactory
+                        .defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
     }
 }
