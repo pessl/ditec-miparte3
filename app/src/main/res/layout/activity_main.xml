@@ -99,6 +99,7 @@
                 android:background="@color/colorAccent"
                 android:textColor="#fff"
                 android:layout_gravity="center"
+                android:onClick="migoogleapiclient"
                 android:text="Google api client"/>
         </LinearLayout>
     </LinearLayout>
