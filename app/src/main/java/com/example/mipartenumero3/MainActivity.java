@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -136,5 +137,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             btnseguir.setText("ON seguir");
             Toast.makeText(this, "Se desactivo el seguimiento", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void mifusedlocation(View view) {
+        startActivity(new Intent(this, MiFusedLocation.class));
     }
 }
